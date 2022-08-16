@@ -21,7 +21,7 @@ class Database
 
     public function __construct()
     {
-        // Set DSN
+        // Set DSN (Data Source Name)
         $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
 
         $options = array(
@@ -50,7 +50,7 @@ class Database
         if (is_null($type)) {
             switch (true) {
                 case is_int($value):
-                    $type = PDO::PARAM_INT; // check PDO bindValue
+                    $type = PDO::PARAM_INT; // check PDO bindValue in Documentation (php.net)
                     break;
                 case is_bool($value):
                     $type = PDO::PARAM_BOOL;

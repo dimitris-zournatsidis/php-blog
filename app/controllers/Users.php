@@ -1,5 +1,4 @@
 <?php
-
 class Users extends Controller
 {
     public function __construct()
@@ -11,7 +10,6 @@ class Users extends Controller
     {
         // Check for POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
             // Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -54,21 +52,18 @@ class Users extends Controller
                 $data['confirm_password_err'] = 'Please confirm password.';
             } else {
                 if ($data['password'] !== $data['confirm_password']) {
-                    // $data['password_err'] = 'Passwords do ot match.';
                     $data['confirm_password_err'] = 'Passwords do not match.';
                 }
             }
 
             // Make sure errors are empty
             if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
-                // Validated
-
                 // Hash the password
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
                 // Register User
                 if ($this->userModel->register($data)) {
-                    flash('register_success', 'You are registered and can log in');
+                    flash('register_success', 'You are registered and can log in.');
                     redirect('users/login');
                 } else {
                     die('Something went wrong!');
@@ -127,7 +122,7 @@ class Users extends Controller
                 // User found
 
             } else {
-                $data['email_err'] = 'No user found';
+                $data['email_err'] = 'No user found.';
             }
 
             // Make sure errors are empty
@@ -140,7 +135,7 @@ class Users extends Controller
                     // Create Session
                     $this->createUserSession($loggedInUser);
                 } else {
-                    $data['password_err'] = 'Password incorrect';
+                    $data['password_err'] = 'Incorrect password.';
                     $this->view('users/login', $data);
                 }
             } else {

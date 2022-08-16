@@ -49,7 +49,7 @@ class User
         // Bind values
         $this->db->bind(':email', $email);
 
-        $row = $this->db->single();
+        $row = $this->db->single(); // TODO: not needed
 
         // Check row
         if ($this->db->rowCount() > 0) {
