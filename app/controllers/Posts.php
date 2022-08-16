@@ -25,6 +25,19 @@ class Posts extends Controller
         $this->view('posts/index', $data);
     }
 
+    public function show($id)
+    {
+        $post = $this->postModel->getPostById($id);
+        $user = $this->userModel->getUserById($post->user_id);
+
+        $data = [
+            'post' => $post,
+            'user' => $user
+        ];
+
+        $this->view('posts/show', $data);
+    }
+
     public function add()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -41,22 +54,24 @@ class Posts extends Controller
 
             // Validate title
             if (empty($data['title'])) {
-                $data['title_err'] = 'Please enter title';
+                $data['title_err'] = 'Please enter title.';
             }
 
             // Validate body
             if (empty($data['body'])) {
-                $data['body_err'] = 'Please enter body text';
+                $data['body_err'] = 'Please enter body text.';
+            } elseif (strlen($data['body']) < 5) {
+                $data['body_err'] = 'Body text must have at least 5 characters.';
             }
 
             // Make sure no errors
             if (empty($data['title_err']) && empty($data['body_err'])) {
                 // Validated
                 if ($this->postModel->addPost($data)) {
-                    flash('post_message', 'Post Added');
+                    flash('post_message', 'Post Added.');
                     redirect('posts');
                 } else {
-                    die('Something went wrong');
+                    die('Something went wrong.');
                 }
             } else {
                 // Load the view with error
@@ -89,22 +104,22 @@ class Posts extends Controller
 
             // Validate title
             if (empty($data['title'])) {
-                $data['title_err'] = 'Please enter title';
+                $data['title_err'] = 'Please enter title.';
             }
 
             // Validate body
             if (empty($data['body'])) {
-                $data['body_err'] = 'Please enter body text';
+                $data['body_err'] = 'Please enter body text.';
             }
 
             // Make sure no errors
             if (empty($data['title_err']) && empty($data['body_err'])) {
                 // Validated
                 if ($this->postModel->updatePost($data)) {
-                    flash('post_message', 'Post Updated');
+                    flash('post_message', 'Post Updated.');
                     redirect('posts');
                 } else {
-                    die('Something went wrong');
+                    die('Something went wrong.');
                 }
             } else {
                 // Load the view with error
@@ -128,19 +143,6 @@ class Posts extends Controller
         }
     }
 
-    public function show($id)
-    {
-        $post = $this->postModel->getPostById($id);
-        $user = $this->userModel->getUserById($post->user_id);
-
-        $data = [
-            'post' => $post,
-            'user' => $user
-        ];
-
-        $this->view('posts/show', $data);
-    }
-
     public function delete($id)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -152,10 +154,10 @@ class Posts extends Controller
             }
 
             if ($this->postModel->deletePost($id)) {
-                flash('post_message', 'Post Removed');
+                flash('post_message', 'Post Removed.');
                 redirect('posts');
             } else {
-                die('Something went wrong');
+                die('Something went wrong.');
             }
         } else {
             redirect('posts');

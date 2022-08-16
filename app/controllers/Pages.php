@@ -18,7 +18,6 @@ class Pages extends Controller
             'description' => 'Simple social network built on the Traversy MVC PHP framework',
         ];
 
-
         $this->view('pages/index', $data);
     }
 

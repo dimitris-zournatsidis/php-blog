@@ -12,6 +12,7 @@
 </div>
 
 <?php foreach ($data['posts'] as $post) : ?>
+    <!-- <?php var_dump($post); ?> -->
     <?php
     $date = new DateTime($post->postCreated);
     $dateFormat =  $date->format('d/m/Y - H:i:s');

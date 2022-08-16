@@ -12,7 +12,7 @@ class Post
     public function getPosts()
     {
         // This is gonna give us an array of objects
-        // $this->db->query('SELECT * FROM users'); // --> the code below used in order to join users table with posts, to get the author name
+        // $this->db->query('SELECT * FROM users'); // --> the code below is used in order to join users table with posts table, to get the author name
         $this->db->query('SELECT *,
                         posts.id as postId, /* -as- is called allias. for example postId is an allias for posts.id and we use postId in our view */
                         users.id as userId, 
